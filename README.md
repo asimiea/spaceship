@@ -6,5 +6,5 @@ This is what it looks like now.
 
 
 
-![image](https://user-images.githubusercontent.com/85371257/125693145-cfad35a9-fdea-4ee2-b3ad-f02ba33a1458.png)
+![image](https://user-images.githubusercontent.com/85371257/125990617-577c59da-0f3d-4e7c-ac9b-5e80f7c314e5.png)
 
