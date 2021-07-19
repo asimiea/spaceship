@@ -4,11 +4,11 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
             "type": "java",
             "name": "Launch App",
             "request": "launch",
+            "vmArgs": "--module-path C:/Users/asimi/OneDrive/Documents/lib/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
             "mainClass": "App",
             "projectName": "spaceship_a037c31b"
         },
@@ -17,14 +17,6 @@
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Launch App",
-            "request": "launch",
-            "vmArgs": "--module-path C:/Users/asimi/OneDrive/Documents/lib/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
-            "mainClass": "App",
-            "projectName": "RapidRoll_90d16252"
         }
     ]
 }
