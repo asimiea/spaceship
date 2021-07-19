@@ -3,45 +3,60 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 
-public class spaceship {
+import javafx.scene.layout.Pane;
+
+public class Spaceship {
     Image s = configuration.ship;
     ImageView imageView = new ImageView(s);
+    Bullet bullet;
+    Bullet[] b;
 
-    public spaceship(Pane root, Scene scene) {
+    public Spaceship(Pane root) {
         
         //Setting the position of the image 
-        imageView.setX(250);
-        imageView.setY(0);
+        imageView.setX(200);
+        imageView.setY(425);
+        imageView.setFitWidth(75);
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+        imageView.setCache(true);
         //imageView.setFitHeight(configuration.height);
         //imageView.setFitWidth(configuration.width);
-        final Circle circ = new Circle(250, 450, 30);
-        //final Circle boulder = new Circle(250, 250, 30);
-
-        circ.setFill(new ImagePattern(s, 0,0,1,1,true));
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        
+        /*scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (configuration.spaceshipMove == true) {
 
-                    if (event.getCode() == KeyCode.LEFT && imageView.getX() > 10) {
+                    if (event.getCode() == KeyCode.LEFT && imageView.getX() > 5) {
                         imageView.setX(imageView.getX() - 10);
                        
                     }
-                    if (event.getCode() == KeyCode.RIGHT && imageView.getX() < 500) {
+                    if (event.getCode() == KeyCode.RIGHT && imageView.getX() < 430) {
                         imageView.setX(imageView.getX() + 10);
                     }
+                    if(event.getCode()==KeyCode.SPACE){
+                        ImageView laser = bullet.imageView;
+                        laser.relocate(imageView.getX(), 0);
+                        root.getChildren().add(laser);
+                    }
                     configuration.spaceshipX= imageView.getX();
-                    configuration.spaceshipY= imageView.getY();
                 }
             }
 
-        });
+        });*/
         root.getChildren().add(imageView);
 
+    }
+    public Bullet shoot() {
+        return new Bullet(20,25);
+    }
+
+    public Boolean collide(Asteroid other){
+        if(this.imageView.getX()==other.imageView.getX() && this.imageView.getY()==other.imageView.getY()){
+            return true;
+        }
+        return false;
     }
 }
