@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "java",
             "name": "Launch App",
@@ -23,7 +24,7 @@
             "request": "launch",
             "vmArgs": "--module-path C:/Users/asimi/OneDrive/Documents/lib/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml",
             "mainClass": "App",
-            "projectName": "spaceship-1_71536dff"
+            "projectName": "RapidRoll_90d16252"
         }
     ]
 }
