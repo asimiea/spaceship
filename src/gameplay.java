@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,70 +28,23 @@ public class Gameplay {
     Background backGround;
     Spaceship Ship;
     Asteroid a[];
-    Bullet bullet[];
-
-    
-    //private ArrayList<Entity> entities = new ArrayList<>();
-    private ArrayList<Asteroid> enemies = new ArrayList<>();
-    private ArrayList<Bullet> projectiles = new ArrayList<>();
-
-    ArrayList<Asteroid> asteroidAdd = new ArrayList<>();
-    ArrayList<Asteroid> asteroidRemove = new ArrayList<>();
-    //ArrayList<ParticleExplosion> explosionsToAdd = new ArrayList<>();
-    //ArrayList<ParticleExplosion> explosionsToRemove = new ArrayList<>();
+    Bullet bullet;   
+    private AnimationTimer gameTimer;
     
     
 
     public Gameplay() throws InterruptedException {
-        /*Canvas canvas = new Canvas(configuration.width,configuration.height);	
-		gc = canvas.getGraphicsContext2D();
-		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> run(gc)));
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.play();*/
-        
+              
         root = new Pane();
         scene = new Scene(root, configuration.width, configuration.height);
 
         backGround = new Background(root);
         Ship = new Spaceship(root);
         a = new Asteroid[10];
-        bullet = new Bullet[12];
+        bullet = new Bullet(10,100);
 
         setupKeybinds();
-
-        
-        /*asteroidLoop = new Timeline(new KeyFrame(Duration.millis(3), new EventHandler<ActionEvent>() {
-              
-            @Override
-            public void handle(final ActionEvent t) {
-                if(a.imageView.getY()>-10){
-                a.imageView.setX(a.imageView.getX() - 10);
-                }
-                else{
-                //imageView.setY(0);
-                a.imageView.setY(rand.nextDouble());
-                }
-                 
-            }
-        }));
-        asteroidLoop.setCycleCount(Timeline.INDEFINITE);
-        asteroidLoop.play();*/
-
-        for(int i =0;i<10;i++) {
-            a[i] = new Asteroid(root, 100, -50);
-            asteroidLoop = new Timeline(new KeyFrame(Duration.seconds(25), new EventHandler<ActionEvent>() {
-              
-                @Override
-                public void handle(final ActionEvent t) {
-                    
-                }
-            }));
-            asteroidLoop.setDelay(Duration.millis(10000* i + 1000));
-            asteroidLoop.setCycleCount(500);
-            asteroidLoop.play();
-        //break;
-        //Raining(a[i]);
-        }        
+        createGameLoop();        
     }
     
     private void setupKeybinds() {
@@ -101,9 +56,38 @@ public class Gameplay {
                 Ship.imageView.setX(Ship.imageView.getX()+10);
             }
             if(e.getCode()==KeyCode.SPACE){
-                Ship.shoot();
+                shoot();
             }
         });
+    }
+
+    private void shoot() {
+        
+        bullet.imageView.setLayoutX(Ship.imageView.getX() + 38);
+		//bullet.imageView.setLayoutY(Ship.imageView.getY() - 45);
+		root.getChildren().add(bullet.imageView);
+    }
+
+    public void fall(){
+
+        for (int i = 0; i < a.length; i++) {
+            a[i] = new Asteroid(root, 400, 30);
+			a[i].imageView.setLayoutY(a[i].imageView.getLayoutY() + 7);
+			a[i].imageView.setRotate(a[i].imageView.getRotate() + 4 * i);
+        
+        }
+    }
+
+    private void createGameLoop() {
+		gameTimer = new AnimationTimer() {
+
+			@Override
+			public void handle(long now) {
+				fall();
+                shoot();
+			}
+		};
+		gameTimer.start();
     }
 
    /* private void add(Entity entity) {
@@ -129,7 +113,7 @@ public class Gameplay {
     }
 
     
-    public void finishGame() {
+    /*public void finishGame() {
         if(Ship.collide(a[1])){
             Text textGameOver = new Text(500, 300, " ");
             textGameOver.prefHeight(100);
@@ -138,5 +122,5 @@ public class Gameplay {
             textGameOver.setFill(Color.WHITE);
             root.getChildren().add(textGameOver);
         }
-    }
+    }*/
 }
