@@ -17,6 +17,7 @@ public class App extends Application{
         
         primaryStage.setScene(Gameplay.getScene());
         primaryStage.show();
+        
     }
     
     public static void main(String[] args) throws Exception {
