@@ -13,6 +13,7 @@ public class App extends Application{
         primaryStage.setTitle("Spaceship");
         
         Gameplay Start=new Gameplay();
+        //Start.createGameElements();
         
         
         primaryStage.setScene(Gameplay.getScene());

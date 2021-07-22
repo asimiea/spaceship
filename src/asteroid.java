@@ -17,23 +17,5 @@ public class Asteroid {
         imageView.setSmooth(true);
         imageView.setCache(true);
         root.getChildren().add(imageView);
-
-        /*asteroidMoveloop = new Timeline(new KeyFrame(Duration.millis(3), new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(final ActionEvent t) {
-                if(imageView.getY()>-10){
-                imageView.setX(imageView.getX() - 10);
-                }
-               else{
-                //imageView.setY(0);
-                imageView.setY(randomPositionFactor());
-                }
-                
-            }
-        }));
-        asteroidMoveloop.setCycleCount(Timeline.INDEFINITE);
-        asteroidMoveloop.play();
-*/
     }
 }

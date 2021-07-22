@@ -16,6 +16,7 @@ public class configuration {
     public static Image bullet=new Image("bullet.png");
     public static Image asteroid = new Image("asteroid.png");
     public static Image explosion = new Image("explosion.jfif");
+    public static Image life = new Image("heart.jfif");
 
     public List<Bullet> shots;
 
