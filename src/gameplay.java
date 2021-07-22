@@ -1,3 +1,6 @@
+/**@author Asimiea Sobomate-Vivtor
+*/
+
 import java.util.Random;
 
 import javafx.animation.AnimationTimer;
