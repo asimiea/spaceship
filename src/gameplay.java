@@ -134,7 +134,6 @@ public class Gameplay {
 
     private void createGameLoop() {
 		gameTimer = new AnimationTimer() {
-
 			@Override
 			public void handle(long now) {
                 //shoot();
