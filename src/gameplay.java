@@ -2,7 +2,6 @@
 */
 
 import java.util.Random;
-
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
