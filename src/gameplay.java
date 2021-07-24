@@ -19,9 +19,9 @@ public class Gameplay {
     Random rand;
     
     //elements
-    private Spaceship Ship;
-    private Asteroid a[];
-    private Bullet bullet;
+    private ImageView Ship;
+    private ImageView a[];
+    private ImageView bullet;
     private ImageView life;
     
     private int playerLife = 3;
@@ -37,9 +37,6 @@ public class Gameplay {
         scene = new Scene(root, configuration.width, configuration.height);
 
         new Background(root);
-        Ship = new Spaceship(root);
-        //a = new Asteroid[10];
-        bullet = new Bullet(10,100);
 
         setupKeybinds();
         createGameElements();
@@ -48,11 +45,11 @@ public class Gameplay {
     
     private void setupKeybinds() {
         scene.setOnKeyPressed(e -> {
-            if(e.getCode() == KeyCode.LEFT && Ship.imageView.getX() > 5){
-                Ship.imageView.setX(Ship.imageView.getX()-10);
+            if(e.getCode() == KeyCode.LEFT && Ship.getX() > 5){
+                Ship.setX(Ship.getX()-10);
             }
-            if(e.getCode() == KeyCode.RIGHT && Ship.imageView.getX() < 427){
-                Ship.imageView.setX(Ship.imageView.getX()+10);
+            if(e.getCode() == KeyCode.RIGHT && Ship.getX() < 427){
+                Ship.setX(Ship.getX()+10);
             }
             if(e.getCode()==KeyCode.SPACE){
                 spacePressed = true;
@@ -67,15 +64,45 @@ public class Gameplay {
     }
 
     public void createGameElements() {
+		//Spaceship
+		Ship = new ImageView(configuration.ship);
+		Ship.setX(200);
+        Ship.setY(425);
+        Ship.setFitWidth(75);
+        Ship.setPreserveRatio(true);
+        Ship.setSmooth(true);
+        Ship.setCache(true);
+		root.getChildren().add(Ship);
+
+		//extra life
 		life = new ImageView(configuration.life);
+		life.setFitWidth(25);
+    	life.setPreserveRatio(true);
+        life.setSmooth(true);
+        life.setCache(true);
 		setNewElementPos(life);
 		root.getChildren().addAll(life);
 
-		a = new Asteroid[3];
+		//bullet
+		bullet = new ImageView(configuration.bullet);
+		bullet.setLayoutX(Ship.getLayoutX());
+		bullet.setLayoutY(Ship.getLayoutY());
+		bullet.setFitHeight(100);
+		bullet.setFitWidth(10);
+		bullet.setPreserveRatio(true);
+		bullet.setSmooth(true);
+		bullet.setCache(true);
+
+		//asteroids
+		a = new ImageView[3];
 		for (int i = 0; i < a.length; i++) {
-			a[i] = new Asteroid(root, 400, 30);
-			setNewElementPos(a[i].imageView);
-			//root.getChildren().add(a[i].imageView);
+			a[i] = new ImageView(configuration.asteroid);
+			a[i].setFitWidth(75);
+			a[i].setPreserveRatio(true);
+			a[i].setSmooth(true);
+			a[i].setCache(true);
+			root.getChildren().add(a[i]);
+			setNewElementPos(a[i]);
 		}
 	}
 
@@ -86,9 +113,9 @@ public class Gameplay {
 
 	private void moveElements() {
 		//star.setLayoutY(star.getLayoutY() + 5);
-		life.setLayoutY(life.getLayoutY() + 5);
+		life.setLayoutY(life.getLayoutY() + 2);
 		for (int i = 0; i < a.length; i++) {
-			a[i].imageView.setLayoutY(a[i].imageView.getLayoutY() + 7);
+			a[i].setLayoutY(a[i].getLayoutY() + 2);
 		}
 	}
 
@@ -98,8 +125,8 @@ public class Gameplay {
 		}
 
 		for (int i = 0; i < a.length; i++) {
-			if (a[i].imageView.getLayoutY() > configuration.height) {
-				setNewElementPos(a[i].imageView);
+			if (a[i].getLayoutY() > configuration.height) {
+				setNewElementPos(a[i]);
 			}
 		}
 	}
@@ -107,39 +134,24 @@ public class Gameplay {
 
     private void shoot() {
         if (spacePressed) {
-			bullet = new Bullet(10, 100);
-			bullet.imageView.setLayoutX(Ship.imageView.getLayoutX() + 38);
-			bullet.imageView.setLayoutY(Ship.imageView.getLayoutY() - 45);
-
-			root.getChildren().add(bullet.imageView);
+			root.getChildren().add(bullet);
 			isBulletFired = true;
 		}
     }
 
     private void moveBullet() {
 		if (isBulletFired) {
-			System.out.println("bullet fired at " + bullet.imageView.getY() + " now moving it");
-			bullet.imageView.setY(bullet.imageView.getY() - 5);
-			System.out.println("bullet is at: " + bullet.imageView.getLayoutY());
+			//System.out.println("bullet fired at " + bullet.getY() + " now moving it");
+			bullet.setY(bullet.getY() - 2);
+			//System.out.println("bullet is at: " + bullet.getLayoutY());
 		}
 	}
-
-    public void fall(){
-
-        for (int i = 0; i < a.length; i++) {
-            a[i] = new Asteroid(root, 400, 30);
-			a[i].imageView.setLayoutY(a[i].imageView.getLayoutY() + 7);
-			//a[i].imageView.setRotate(a[i].imageView.getRotate() + 4 * i);
-        
-        }
-    }
 
     private void createGameLoop() {
 		gameTimer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-                //shoot();
-                fall();
+                shoot();
                 moveElements();
 				moveBullet();
 				checkElementsPos();
@@ -151,22 +163,22 @@ public class Gameplay {
 
     private void collisionDetection() {
 		// collision detection with life
-		if (37 + 12 > calculateDistance(Ship.imageView.getLayoutX() + 49, Ship.imageView.getLayoutY() + 49, life.getLayoutX() + 37,
+		if (37 + 12 > calculateDistance(Ship.getLayoutX() + 49, Ship.getLayoutY() + 49, life.getLayoutX() + 37,
 				life.getLayoutY() + 15)) {
 			setNewElementPos(life);
 			addLife();
 		}
 		// collision detection with meteors
 		for (int i = 0; i < a.length; i++) {
-			if (a[i].imageView.getY() + Ship.imageView.getY() > calculateDistance(Ship.imageView.getLayoutX() + 49, Ship.imageView.getLayoutY() + 37,
-					a[i].imageView.getLayoutX() + 20, a[i].imageView.getLayoutY() + 20)) {
+			if (a[i].getY() + Ship.getY() > calculateDistance(Ship.getLayoutX() + 49, Ship.getLayoutY() + 37,
+					a[i].getLayoutX() + 20, a[i].getLayoutY() + 20)) {
 
 				removeLife();
-				setNewElementPos(a[i].imageView);
+				setNewElementPos(a[i]);
 			}
 		}
 		/*for (int i = 0; i < a.length; i++) {
-			if (METEOR_RADIUS + Ship.imageView.yProperty() > calculateDistance(Ship.getLayoutX() + 49, Ship.getLayoutY() + 37,
+			if (METEOR_RADIUS + Ship.yProperty() > calculateDistance(Ship.getLayoutX() + 49, Ship.getLayoutY() + 37,
 					greyMeteors[i].getLayoutX() + 20, greyMeteors[i].getLayoutY() + 20)) {
 
 				removeLife();
