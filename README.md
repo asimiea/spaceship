@@ -3,6 +3,8 @@
 Not done yet.
 This is what it looks like now.
 
+Asteroids and extra player lives have been added but I still can't get it to shoot. :(
+
 
 
 
