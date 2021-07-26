@@ -1,15 +1,13 @@
 /**@author Asimiea Sobomate-Victor */
 
 
-import java.io.FileNotFoundException;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class App extends Application{
     
     @Override
-    public void start(Stage primaryStage) throws FileNotFoundException, InterruptedException{
+    public void start(Stage primaryStage) throws InterruptedException{
         primaryStage.setTitle("Spaceship");
         
         Gameplay Start=new Gameplay();
@@ -20,6 +18,7 @@ public class App extends Application{
         primaryStage.show();
         
     }
+    
     public static void main(String[] args) throws Exception {
         launch(args);
     }
