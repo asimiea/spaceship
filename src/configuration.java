@@ -1,8 +1,6 @@
 /**
  * @author Asimiea Sobomate-Victor
  */
-import java.util.List;
-
 import javafx.scene.image.Image;
 
 public class configuration {
@@ -12,10 +10,8 @@ public class configuration {
     public static Image background=new Image("background.png"); //("space.jpg");
     public static Image bullet=new Image("bullet.png");
     public static Image asteroid = new Image("asteroid.png");
-    public static Image explosion = new Image("explosion.jfif");
+    public static Image explosion = new Image("explosion.png");
     public static Image life = new Image("heart.png");
-
-    public List<Bullet> shots;
 
     public static boolean spaceshipMove=true;
     public static double spaceshipX=250;
