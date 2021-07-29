@@ -12,8 +12,8 @@ public class Gameplay {
     private Pane root;
     private static Scene scene;
     
-    private Boolean spacePressed;
-    private boolean isBulletFired;
+    private Boolean spacePressed = false;
+    private boolean isBulletFired = false;
     Boolean gameOver;
     
     Random rand;
@@ -40,25 +40,27 @@ public class Gameplay {
 
         setupKeybinds();
         createGameElements();
+		collisionDetection();
         createGameLoop();        
     }
     
     private void setupKeybinds() {
         scene.setOnKeyPressed(e -> {
-            if(e.getCode() == KeyCode.LEFT && Ship.getX() > 5){
+            if(e.getCode() == KeyCode.LEFT && Ship.getX() > -30){
                 Ship.setX(Ship.getX()-10);
             }
-            if(e.getCode() == KeyCode.RIGHT && Ship.getX() < 427){
+            if(e.getCode() == KeyCode.RIGHT && Ship.getX() < 460){
                 Ship.setX(Ship.getX()+10);
             }
             if(e.getCode()==KeyCode.SPACE){
                 spacePressed = true;
+				isBulletFired = true;
             }
         });
         scene.setOnKeyReleased(e-> {
 			if (e.getCode() == KeyCode.SPACE) {
 				spacePressed = false;
-				isBulletFired = false;
+				//isBulletFired = false;
 			}
 		});
     }
@@ -81,20 +83,10 @@ public class Gameplay {
         life.setSmooth(true);
         life.setCache(true);
 		setNewElementPos(life);
-		root.getChildren().addAll(life);
-
-		//bullet
-		bullet = new ImageView(configuration.bullet);
-		bullet.setLayoutX(Ship.getLayoutX());
-		bullet.setLayoutY(Ship.getLayoutY());
-		bullet.setFitHeight(100);
-		bullet.setFitWidth(10);
-		bullet.setPreserveRatio(true);
-		bullet.setSmooth(true);
-		bullet.setCache(true);
+		root.getChildren().addAll(life);		
 
 		//asteroids
-		a = new ImageView[3];
+		a = new ImageView[10];
 		for (int i = 0; i < a.length; i++) {
 			a[i] = new ImageView(configuration.asteroid);
 			a[i].setFitWidth(75);
@@ -113,6 +105,8 @@ public class Gameplay {
 
 	private void moveElements() {
 		//star.setLayoutY(star.getLayoutY() + 5);
+		//moveBullet();
+		//bullet.setLayoutY(bullet.getLayoutY()-2);
 		life.setLayoutY(life.getLayoutY() + 2);
 		for (int i = 0; i < a.length; i++) {
 			a[i].setLayoutY(a[i].getLayoutY() + 2);
@@ -123,7 +117,7 @@ public class Gameplay {
 		if (life.getLayoutY() > configuration.height) {
 			setNewElementPos(life);
 		}
-
+		
 		for (int i = 0; i < a.length; i++) {
 			if (a[i].getLayoutY() > configuration.height) {
 				setNewElementPos(a[i]);
@@ -134,6 +128,14 @@ public class Gameplay {
 
     private void shoot() {
         if (spacePressed) {
+			bullet = new ImageView(configuration.bullet);
+			bullet.setX(Ship.getX()+30);
+			bullet.setY(Ship.getY());
+			bullet.setFitHeight(100);
+			bullet.setFitWidth(10);
+			bullet.setPreserveRatio(true);
+			bullet.setSmooth(true);
+			bullet.setCache(true);
 			root.getChildren().add(bullet);
 			isBulletFired = true;
 		}
@@ -142,7 +144,7 @@ public class Gameplay {
     private void moveBullet() {
 		if (isBulletFired) {
 			//System.out.println("bullet fired at " + bullet.getY() + " now moving it");
-			bullet.setY(bullet.getY() - 2);
+			bullet.setY(bullet.getY() - 8);
 			//System.out.println("bullet is at: " + bullet.getLayoutY());
 		}
 	}
@@ -151,8 +153,8 @@ public class Gameplay {
 		gameTimer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-                shoot();
                 moveElements();
+				shoot();
 				moveBullet();
 				checkElementsPos();
 				//collisionDetection();
