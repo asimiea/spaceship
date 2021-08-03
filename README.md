@@ -3,7 +3,9 @@
 Not done yet.
 This is what it looks like now.
 
-Asteroids and extra player lives have been added but I still can't get it to shoot. :(
+Asteroids, extra player lives and shooting have been added but I haven't added the collisions. :(
+
+And i can't make the bullet to be continuous when i fire a new one
 
 
 
