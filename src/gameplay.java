@@ -55,11 +55,12 @@ public class Gameplay {
             if(e.getCode()==KeyCode.SPACE){
                 spacePressed = true;
 				isBulletFired = true;
+				shoot();
             }
         });
         scene.setOnKeyReleased(e-> {
 			if (e.getCode() == KeyCode.SPACE) {
-				spacePressed = false;
+				spacePressed = true;
 				//isBulletFired = false;
 			}
 		});
@@ -129,13 +130,13 @@ public class Gameplay {
     private void shoot() {
         if (spacePressed) {
 			bullet = new ImageView(configuration.bullet);
-			bullet.setX(Ship.getX()+30);
-			bullet.setY(Ship.getY());
-			bullet.setFitHeight(100);
+			bullet.setLayoutX(Ship.getX()+30);
+			bullet.setLayoutY(Ship.getY());
+			bullet.setFitHeight(50);
 			bullet.setFitWidth(10);
-			bullet.setPreserveRatio(true);
-			bullet.setSmooth(true);
-			bullet.setCache(true);
+			//bullet.setPreserveRatio(true);
+			//bullet.setSmooth(true);
+			//bullet.setCache(true);
 			root.getChildren().add(bullet);
 			isBulletFired = true;
 		}
@@ -154,7 +155,7 @@ public class Gameplay {
 			@Override
 			public void handle(long now) {
                 moveElements();
-				shoot();
+				//shoot();
 				moveBullet();
 				checkElementsPos();
 				//collisionDetection();
