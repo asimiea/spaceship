@@ -10,7 +10,7 @@ public class App extends Application{
     public void start(Stage primaryStage) throws InterruptedException{
         primaryStage.setTitle("Spaceship");
         
-        Gameplay Start=new Gameplay();
+       new Gameplay();
         
         
         primaryStage.setScene(Gameplay.getScene());
