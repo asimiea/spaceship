@@ -25,7 +25,7 @@ public class Gameplay {
     private ImageView life;
     
     private int playerLife = 3;
-	private int points;
+	//private int points;
 
     private AnimationTimer gameTimer;
         
