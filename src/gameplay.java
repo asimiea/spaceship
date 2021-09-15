@@ -173,8 +173,7 @@ public class Gameplay {
 		}
 		// collision detection with meteors
 		for (int i = 0; i < a.length; i++) {
-			if (a[i].getY() + Ship.getY() > calculateDistance(Ship.getLayoutX() + 49, Ship.getLayoutY() + 37,
-					a[i].getLayoutX() + 20, a[i].getLayoutY() + 20)) {
+			if (a[i].getY() == Ship.getY()) {
 
 				removeLife();
 				setNewElementPos(a[i]);
